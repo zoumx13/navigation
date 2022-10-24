@@ -6,9 +6,8 @@ import AccountScreen from "./AccountScreen";
 import SettingsScreen from "./SettingsScreen";
 import HomeScreen from "./HomeScreen";
 
-const Tab = createBottomTabNavigator();
-
 export default function MyTabs() {
+  const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({

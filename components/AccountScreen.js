@@ -1,14 +1,27 @@
-import * as React from 'react';
-import { Button, Text, View } from "react-native";
+import * as React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ScrollView, Button, Text, View } from "react-native";
 import styles from "../styles";
+import { useEffect, useState } from "react";
 
-export default function AccountScreen(){
-  function Deconnect(){
-    console.log(logged);
+export default function AccountScreen() {
+  const [email, setEmail] = useState('')
+  async function Load() {
+    const jsonValue = await AsyncStorage.getItem("userData");
+    const user = JSON.parse(jsonValue);
+    setEmail(user.email)
   }
-    return(
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Account</Text>
-    </View> 
-    )
-  }
+  useEffect(() => {
+    Load();
+  },[]);
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <View>
+        <Text>Account</Text>
+      </View>
+      <View>
+        <Text> Email : {email}</Text>
+      </View>
+    </View>
+  );
+}

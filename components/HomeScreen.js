@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { Text, View, Button } from "react-native";
+import { ScrollView, Text, View, Button } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ChangeLog from '../lib/ChangeLog';
 import styles from "../styles";
 
 export default function HomeScreen() {
