@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Text, TextInput, View, Button } from "react-native";
-import styles from "../styles";
-import { useState, useEffect } from "react";
+import styles from "../../styles";
+import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function LogScreen() {
@@ -17,7 +17,7 @@ export default function LogScreen() {
     console.log("Bonjour !");
   }
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View style={styles.mainview}>
       <View>
         <Text>Veuillez vous identifier :</Text>
       </View>

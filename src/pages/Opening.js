@@ -1,44 +1,56 @@
 import * as React from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import AccountScreen from "./AccountScreen";
-import SettingsScreen from "./SettingsScreen";
-import HomeScreen from "./HomeScreen";
 import { useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   Keyboard,
   TouchableWithoutFeedback,
-  Image,
   Text,
   TextInput,
   View,
   Button,
   ImageBackground,
 } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import styles from "../styles";
 import MyTabs from "./MyTabs";
+import styles from "../../styles";
+import { hasAuthenticated } from "../services/AutheAPI";
+import Auth from "../contexts/Auth"
 
 export default function Opening() {
+  
+  const [isAuthenticated,setIsAuthenticated] = useState(hasAuthenticated())
+
+
+
   const [logged, setLogged] = useState(false);
-  const [userData, setUserData] = useState("");
   const image = {
     uri: "https://upload.wikimedia.org/wikipedia/fr/thumb/4/43/Logo_Olympique_de_Marseille.svg/1200px-Logo_Olympique_de_Marseille.svg.png",
   };
   function LogScreen() {
     const [email, onChangeEmail] = useState("");
     const [password, onChangePassword] = useState("");
-    async function Logged() {
-      const newUserData = JSON.stringify({ email, password });
-      setUserData(newUserData);
-      await AsyncStorage.setItem("userData", newUserData);
-      const jsonValue = await AsyncStorage.getItem("userData");
-      console.log(JSON.parse(jsonValue));
-      console.log("Bonjour !");
-      setLogged(!logged);
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        let data = { password: password, email: email };
+        let options = {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: new Headers ({
+                "Content-Type": "application/json"
+            })
+        }
+        let reponse = await fetch("http://192.168.0.44:8080/login", options);
+        let donnes = await reponse.json();
+        console.log(donnes)
+        await AsyncStorage.setItem("token", donnes.token);
+        if(donnes.token){
+            setLogged(!logged)
+        }
     }
     return (
+
+
+
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.logscreentop}>
@@ -68,7 +80,7 @@ export default function Opening() {
               />
             </View>
             <View>
-              <Button title="Valider" onPress={Logged} />
+              <Button title="Valider" onPress={handleSubmit}/>
             </View>
           </View>
           <View style={styles.logscreenbottom}>

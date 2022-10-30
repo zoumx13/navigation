@@ -1,34 +1,34 @@
 import * as React from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import AccountScreen from "./AccountScreen";
 import SettingsScreen from "./SettingsScreen";
-import HomeScreen from "./HomeScreen";
+import ForumScreen from "./ForumScreen";
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 export default function MyTabs() {
-  const Tab = createBottomTabNavigator();
+  const Tab = createMaterialTopTabNavigator();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-          if (route.name === "Accueil") {
-            iconName = focused ? "home-outline" : "home-outline";
+          if (route.name === "Forum") {
+            iconName = focused ? "chatbubbles-outline" : "chatbubbles-outline";
           } else if (route.name === "Réglages") {
             iconName = focused ? "cog-outline" : "cog-outline";
           } else if (route.name === "Mon compte") {
             iconName = focused
-              ? "person-circle-outline"
-              : "person-circle-outline";
+              ? "key-outline"
+              : "key-outline";
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "blue",
+        // tabBarActiveTintColor: "blue",
         tabBarInactiveTintColor: "gray",
+        tabBarActiveBackgroundColor: "blue",
       })}
     >
-      <Tab.Screen name="Accueil" component={HomeScreen} />
+      <Tab.Screen name="Forum" component={ForumScreen} />
       <Tab.Screen name="Mon compte" component={AccountScreen} />
       <Tab.Screen name="Réglages" component={SettingsScreen} />
     </Tab.Navigator>
