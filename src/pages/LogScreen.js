@@ -1,21 +1,15 @@
 import * as React from "react";
 import { Text, TextInput, View, Button } from "react-native";
 import styles from "../../styles";
-import { useState } from "react";
+import { useState, useContext} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthContext } from "../contexts/Auth";
 
 export default function LogScreen() {
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
   const [userData, setUserData] = useState("");
-  async function Logged() {
-    const newUserData = JSON.stringify({ email, password });
-    setUserData(newUserData);
-    await AsyncStorage.setItem("userData", newUserData);
-    const jsonValue = await AsyncStorage.getItem("userData");
-    console.log(JSON.parse(jsonValue));
-    console.log("Bonjour !");
-  }
+  const {signIn} = useContext(AuthContext) 
   return (
     <View style={styles.mainview}>
       <View>
@@ -39,8 +33,8 @@ export default function LogScreen() {
         />
       </View>
       <View>
-        <Button title="Valider" onPress={Logged} />
-      </View>
+        <Button title="Valider" onPress={signIn()} />
+      </View>    
     </View>
   );
 }

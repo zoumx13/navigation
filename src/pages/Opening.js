@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   Keyboard,
@@ -13,15 +12,8 @@ import {
 } from "react-native";
 import MyTabs from "./MyTabs";
 import styles from "../../styles";
-import { hasAuthenticated } from "../services/AutheAPI";
-import Auth from "../contexts/Auth"
 
 export default function Opening() {
-  
-  const [isAuthenticated,setIsAuthenticated] = useState(hasAuthenticated())
-
-
-
   const [logged, setLogged] = useState(false);
   const image = {
     uri: "https://upload.wikimedia.org/wikipedia/fr/thumb/4/43/Logo_Olympique_de_Marseille.svg/1200px-Logo_Olympique_de_Marseille.svg.png",
@@ -49,7 +41,7 @@ export default function Opening() {
     }
     return (
 
-
+      <Auth.Provider value={isAuthenticated}>
 
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
@@ -88,11 +80,15 @@ export default function Opening() {
           </View>
         </View>
       </TouchableWithoutFeedback>
+
+  </Auth.Provider>
+
+  
     );
   }
   return (
-    <NavigationContainer>
+    <View>
       {logged == false ? <LogScreen /> : <MyTabs />}
-    </NavigationContainer>
+      </View>
   );
 }
