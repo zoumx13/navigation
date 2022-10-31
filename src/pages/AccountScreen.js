@@ -2,8 +2,9 @@ import * as React from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button, ScrollView, Text, View } from "react-native";
 import styles from "../../styles";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import AnimatedAccount from "../components/animated/AnimatedAccount";
+import { AuthContext } from "../contexts/Auth";
 
 export default function AccountScreen({ navigation }) {
   const [show, setShow] = useState(false);
@@ -22,6 +23,7 @@ export default function AccountScreen({ navigation }) {
   const [loadAnimated, setLoadAnimated] = useState(false);
   const [data, setData] = useState("");
   const [user, setUser] = useState("");
+  const {signOut} = useContext(AuthContext)
   async function Load() {
     const token = await AsyncStorage.getItem("token");
     let options = {
@@ -52,7 +54,6 @@ export default function AccountScreen({ navigation }) {
       setResponses(donnes.responses);
     }
   }
-
   useEffect(() => {
     const unsubscribe = navigation.addListener(
       "focus",
@@ -92,7 +93,7 @@ export default function AccountScreen({ navigation }) {
             </View>
           </View>
           <View style={{flex:1}}></View>
-          <Button title="Déconnexion" />
+          <Button title="Déconnexion" onPress={signOut} />
         </ScrollView>
       ) : (
         <AnimatedAccount />
