@@ -10,6 +10,10 @@ export default function MyTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        // tabBarStyle:{
+        //   backgroundColor: '#fff',
+        //   activeColor:"#1e90ff",
+        // },
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           if (route.name === "Forum") {
@@ -23,9 +27,9 @@ export default function MyTabs() {
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        // tabBarActiveTintColor: "blue",
         tabBarInactiveTintColor: "gray",
         tabBarActiveBackgroundColor: "blue",
+
       })}
     >
       <Tab.Screen name="Forum" component={ForumScreen} />

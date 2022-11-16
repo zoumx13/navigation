@@ -7,14 +7,6 @@ import MyTabs from "./src/pages/MyTabs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 
-// export default function App() {
-//   const [show, setShow] = useState(false);
-//   ;
-//   return (
-
-//   );
-// }
-
 export default function App() {
   const [show, setShow] = useState(false);
   const [userToken, setUserToken] = useState(null);
@@ -36,7 +28,7 @@ export default function App() {
       <View name="Opening" style={{ flex: 1 }}>
         {show ? (
           <NavigationContainer>
-            {userToken != null ? <MyTabs /> : <LogScreen />}
+            {userToken != null ? <MyTabs/> : <LogScreen />}
           </NavigationContainer>
         ) : (
           <Animated />

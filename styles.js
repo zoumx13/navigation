@@ -106,9 +106,14 @@ const styles = StyleSheet.create({
   infoPost: {
     flex: 1,
     flexDirection: "row",
+    alignItems:'baseline',
+    justifyContent:'space-between'
   },
   txtInfoPost: {
     fontSize: 4,
+  },
+  txtInfoResponse:{
+    fontSize : 12,
   },
   btnContainerForum: {
     flex: 1,
@@ -177,6 +182,12 @@ const styles = StyleSheet.create({
   modalTop: {
     alignItems: "center",
   },
+  modalResponse:{
+    backgroundColor: "#fff",
+    flex: 1,
+    borderColor: "#1e90ff",
+    borderWidth: 5,
+  },
   inputModal: {
     width : 60,
     height: 150,
@@ -185,6 +196,9 @@ const styles = StyleSheet.create({
     padding: 10,
     width: 300,
     borderColor: "#1e90ff",
+  },
+  viewMessage: {
+    flex: 1,
   },
   // ANIMATED
   containerAnimated:{

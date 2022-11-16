@@ -6,12 +6,13 @@ import {
   Button,
   Alert,
   Modal,
+  Link,
 } from "react-native";
 import * as React from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState, useEffect } from "react";
 import { ScrollView } from "react-native-gesture-handler";
-import styles from "../../styles"
+import styles from "../../styles";
 import AnimatedForum from "../components/animated/AnimatedForum";
 
 function Forum() {
@@ -22,6 +23,9 @@ function Forum() {
   const [comment, setComment] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleModal = () => setIsModalVisible(!isModalVisible);
+  const [isResponseModalVisible, setIsResponseModalVisible] = useState(false);
+  const handleResponseModal = () =>
+    setIsResponseModalVisible(!isResponseModalVisible);
   async function LoadPost() {
     const token = await AsyncStorage.getItem("token");
     let options = {
@@ -177,6 +181,52 @@ function Forum() {
               <View style={styles.infoPost}>
                 <Text style={styles.txtInfoPost}>{item.date}</Text>
                 <Text style={styles.txtInfoPost}>{item.pseudo}</Text>
+                <Text
+                  style={styles.txtInfoResponse}
+                  onPress={() => handleResponseModal(item._id)}
+                >
+                  Commentaires : {item.response.length}
+                </Text>
+              </View>
+              <View style={styles.modalTop}>
+                <Modal
+                  visible={isResponseModalVisible}
+                  transparent={true}
+                  animationType="slide"
+                >
+                  <View style={styles.modal}></View>
+                  <View style={styles.modalResponse}>
+
+
+                  <ScrollView>
+
+                  {item.response.map((responses)=>
+
+                  <View style={styles.article} key={responses._id}>
+                    <View style={styles.viewMessageResponse}>
+                      <Text>{responses.message}</Text>
+                    </View>
+                    <View style={styles.infoPost}>
+                      <Text style={styles.txtInfoPost}>{responses.date}</Text>
+                      <Text style={styles.txtInfoPost}>{responses.pseudo}</Text>
+                    </View>
+                  </View>
+                   )}
+
+
+
+
+
+                    <View style={{ flexDirection: "row" }}>
+                      <Button
+                        title="Fermer"
+                        onPress={() => handleResponseModal(item._id)}
+                      />
+                    </View>
+                    </ScrollView>
+                  </View>
+                  <View style={styles.modal}></View>
+                </Modal>
               </View>
               <View style={styles.btnContainerForum}>
                 <TouchableOpacity
@@ -214,10 +264,16 @@ function Forum() {
                       numberOfLines={4}
                       require
                     />
-                    <Button
-                      title="Envoyer"
-                      onPress={() => toComment(item._id)}
-                    />
+                    <View style={{ flexDirection: "row" }}>
+                      <Button
+                        title="Envoyer"
+                        onPress={() => toComment(item._id)}
+                      />
+                      <Button
+                        title="Annuler"
+                        onPress={() => handleModal(item._id)}
+                      />
+                    </View>
                   </View>
                   <View style={styles.modal}></View>
                 </Modal>

@@ -21,7 +21,6 @@ export default function AccountScreen({ navigation }) {
   const [posts, setPost] = useState("");
   const [responses, setResponses] = useState("");
   const [loadAnimated, setLoadAnimated] = useState(false);
-  const [data, setData] = useState("");
   const [user, setUser] = useState("");
   const {signOut} = useContext(AuthContext)
   async function Load() {
